@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
-  rollno: String,
+  college: String,
   sentence: String,
   status: String
 });
@@ -190,7 +190,7 @@ app.get("/compose", function (req, res) {
 app.post("/compose", function (req, res) {
   const user_sentence = req.body.sentence;
   name_ = req.body.name;
-  rollno_ = req.body.rollno;
+  college_ = req.body.college;
 
   //Once the user is authenticated and their session gets saved, their user details are saved to req.user.
   // console.log(req.user);
@@ -204,7 +204,7 @@ app.post("/compose", function (req, res) {
       if (foundUser) {
         foundUser.sentence = user_sentence;
         foundUser.name = name_;
-        foundUser.rollno = rollno_;
+        foundUser.college = college_;
         foundUser.save(function () {
           req.flash('message', "saved")
           res.redirect("/compose");
