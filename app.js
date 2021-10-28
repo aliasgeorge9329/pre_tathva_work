@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(session({
-  secret: "Our little secret.",
+  secret: "User Login",
   resave: false,
   saveUninitialized: false
 }));
@@ -186,7 +186,7 @@ app.get("/compose", function (req, res) {
 
 
 app.post("/compose", function (req, res) {
-  const submittedSecret = req.body.sentence;
+  const user_sentence = req.body.sentence;
   name_ = req.body.name;
   rollno_ = req.body.rollno;
 
@@ -200,7 +200,7 @@ app.post("/compose", function (req, res) {
 
     else {
       if (foundUser) {
-        foundUser.sentence = submittedSecret;
+        foundUser.sentence = user_sentence;
         foundUser.name = name_;
         foundUser.rollno = rollno_;
         foundUser.save(function () {
