@@ -257,6 +257,7 @@ app.post("/admin", function (req, res) {
   });
 
   req.flash('message', "Saved Successfully")
+  users_printed_login_admin = [];
   res.redirect("/login");
 
 });
