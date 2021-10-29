@@ -8,8 +8,6 @@ const session = require('express-session');
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const findOrCreate = require('mongoose-findorcreate');
-let alert = require('alert');
-const { request } = require("express");
 var flash = require("connect-flash")
 var ObjectId = require('mongodb').ObjectID;
 
@@ -36,6 +34,7 @@ users_printed_login_admin = [];
 admin_username = process.env.ADMIN_ID;
 admin_pass = process.env.ADMIN_PASS;
 mongoDB = process.env.MONGO;
+
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set("useCreateIndex", true);
