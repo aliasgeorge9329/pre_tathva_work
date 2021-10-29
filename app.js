@@ -36,6 +36,7 @@ admin_pass = process.env.ADMIN_PASS;
 mongoDB = process.env.MONGO;
 
 
+
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set("useCreateIndex", true);
 
@@ -122,19 +123,7 @@ app.post("/login", function (req, res) {
     else {
       passport.authenticate("local")(req, res, function () {
         if (user.username == admin_username && user.password == admin_pass) {
-          User.find(function (err, all_user) {
-            if (err) {
-              console.log(err);
-            }
-            else {
-              all_user.forEach(function (each) {
-                if (each.status == null && each.username != admin_username) {
-                  globalThis.users_printed_login_admin.push(String(each._id));
-                }
-              })
-              res.render("admin", { user: all_user, err_msg: err_message });
-            }
-          });
+          res.redirect("/admin");
         }
         else {
           res.redirect("/compose");
@@ -145,6 +134,96 @@ app.post("/login", function (req, res) {
 });
 
 
+app.get("/admin", function (req, res) {
+  if (req.isAuthenticated() && req["user"].username == admin_username) {
+    message_ = req.flash('message')[0];
+    User.find(function (err, all_user) {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        all_user.forEach(function (each) {
+          if (each.status == null && each.username != admin_username) {
+            globalThis.users_printed_login_admin.push(String(each._id));
+          }
+        })
+        res.render("admin", { user: all_user, err_msg: message_ });
+      }
+    });
+  } else {
+    res.redirect("/");
+  }
+});
+
+
+app.post("/admin", function (req, res) {
+  if (req.isAuthenticated() && req["user"].username == admin_username) {
+    globalThis.users_printed_login_admin;
+    accepted_ = Object.keys(req.body);
+    accepted_.pop();
+    rejected = users_printed_login_admin.filter((el) => !accepted_.includes(el));
+    approved = accepted_;
+
+    rejected.forEach(function (id) {
+      User.findById(ObjectId(id), function (err, foundUser) {
+        if (err) {
+          console.log(err);
+        } else {
+          foundUser.status = "rejected";
+          foundUser.save();
+        };
+
+      });
+
+    });
+
+    accepted_.forEach(function (id) {
+      User.findById(ObjectId(id), function (err, foundUser) {
+        if (err) {
+          console.log(err);
+        } else {
+          foundUser.status = "accepted";
+          foundUser.save();
+        };
+
+      });
+
+    });
+
+    req.flash('message', "saved")
+    users_printed_login_admin = [];
+    res.redirect("/admin");
+
+  }
+
+});
+
+app.post("/modify_accepted", function (req, res) {
+  if (req.isAuthenticated() && req["user"].username == admin_username) {
+    to_reject_ = Object.keys(req.body);
+    to_reject_.pop();
+    to_reject = to_reject_;
+
+    to_reject_.forEach(function (id) {
+      User.findById(ObjectId(id), function (err, foundUser) {
+        if (err) {
+          console.log(err);
+        } else {
+          foundUser.status = "rejected";
+          foundUser.save();
+        };
+
+      });
+
+    });
+
+    req.flash('message', "saved")
+    users_printed_login_admin = [];
+    res.redirect("/admin");
+
+  }
+
+});
 
 app.post("/register", function (req, res) {
   User.register({ username: req.body.username }, req.body.password, function (err, user) {
@@ -222,44 +301,6 @@ app.get("/logout", function (req, res) {
 });
 
 
-app.post("/admin", function (req, res) {
-  globalThis.users_printed_login_admin;
-  accepted_ = Object.keys(req.body);
-  accepted_.pop();
-  rejected = users_printed_login_admin.filter((el) => !accepted_.includes(el));
-  approved = accepted_;
-
-  rejected.forEach(function (id) {
-    User.findById(ObjectId(id), function (err, foundUser) {
-      if (err) {
-        console.log(err);
-      } else {
-        foundUser.status = "rejected";
-        foundUser.save();
-      };
-
-    });
-
-  });
-
-  accepted_.forEach(function (id) {
-    User.findById(ObjectId(id), function (err, foundUser) {
-      if (err) {
-        console.log(err);
-      } else {
-        foundUser.status = "accepted";
-        foundUser.save();
-      };
-
-    });
-
-  });
-
-  req.flash('message', "Saved Successfully")
-  users_printed_login_admin = [];
-  res.redirect("/login");
-
-});
 
 
 
