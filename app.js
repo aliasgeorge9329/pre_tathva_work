@@ -7,13 +7,14 @@ const mongoose = require("mongoose");
 const session = require('express-session');
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
 var flash = require("connect-flash")
 var ObjectId = require('mongodb').ObjectID;
 
 
 const app = express();
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 3000
 
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
@@ -22,7 +23,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(session({
-  secret: "User Login",
+  secret: "User Login Session",
   resave: false,
   saveUninitialized: false
 }));
@@ -36,14 +37,14 @@ admin_pass = process.env.ADMIN_PASS;
 mongoDB = process.env.MONGO;
 
 
-
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set("useCreateIndex", true);
 
 const userSchema = new mongoose.Schema({
   name: String,
-  email: String,
+  email: { type : String , unique : true, required : true, dropDups: true },
   password: String,
+  googleId: String,
   college: String,
   sentence: String,
   status: String
@@ -67,6 +68,34 @@ passport.deserializeUser(function (id, done) {
     done(err, user);
   });
 });
+
+
+passport.use(new GoogleStrategy({
+  clientID: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+  callbackURL: "http://localhost:3000/auth/google/compose",
+  userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+  
+},
+function(accessToken, refreshToken, profile, cb) {
+  console.log(profile);
+
+  User.findOrCreate({ googleId: profile.id , email: profile.emails[0].value}, function (err, user) {
+    return cb(err, user);
+  });
+}
+));
+
+app.get("/auth/google",
+  passport.authenticate('google', { scope: ["profile","email"] })
+);
+
+app.get("/auth/google/compose",
+  passport.authenticate('google', { failureRedirect: "/login" }),
+  function(req, res) {
+    // Successful authentication, redirect to secrets.
+    res.redirect("/compose");
+  });
 
 
 
@@ -296,6 +325,7 @@ app.post("/compose", function (req, res) {
 
 
 app.get("/logout", function (req, res) {
+  req.session = null;
   req.logout();
   res.redirect("/");
 });
