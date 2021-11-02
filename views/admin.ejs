@@ -10,13 +10,15 @@
     />
 
     <link rel="stylesheet" href="/css/styles.css" />
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <p class="navbar-brand">TATHVA</p>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li id="login"><a href="/logout">LOGOUT</a></li>
+    <link rel="shortcut icon" href="/Images/logo.ico" />
+
+    <nav class="navbar-complete">
+      <div class="brand-title">
+        <a href="#"><h1>Tathva</h1></a>
+      </div>
+      <div class="navbar-links">
+        <ul>
+          <li><a href="/logout">Logout</a></li>
         </ul>
       </div>
     </nav>
@@ -29,10 +31,12 @@
             <%="Saved Successfully"%>
           </div>
         <%} %>
+        <a href="/print" target="_blank" style="margin:0 80% 0; " ><button class="btn btn-success">Click here to print all data</button></a><br>
         <form class="" action="/admin" method="post">
           <div class="form-group">
-
+            
             <h2 style="font-family: 'Times New Roman', Times, serif; color: red;"><u>Tick the sentence which you feel Good</u></h2>
+            <h4>Be carefull while ticking. Once accepted the quote user will be alert via email</h4>
             <br><br><br>
           
         <%  user.forEach(function(user_data){ if (user_data.sentence != null && user_data.status != "accepted" && user_data.status != "rejected") {%>
@@ -50,6 +54,7 @@
 
         </div>
         
+
         <a
       class="btn btn-danger"
       data-toggle="collapse"
@@ -88,13 +93,6 @@
       </div>
     </div>
 
-
-     
-
-    
-<div class="footer-padding"></div>
-  <div class="footer">
-  </div>
 </div>
 </body>
 <!-- JavaScript Bundle with Popper -->

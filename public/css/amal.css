@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;500&display=swap');
+body{
+  background-color:#161719;
+  text-align:center;
+  
+  overflow-x:hidden;
+}
+
+
+.collage_container {
+  display:inline-block;
+  width:800px;
+  height: 500px;
+  position:relative;
+  margin-top:12rem;
+  margin-right: 200px;
+  }
+
+.collage_piece{
+  /* overflow:hidden; */
+  position:absolute;
+  box-sizing:border-box;
+  /* background-repeat: no-repeat; */
+  transition: transform 1s ease-in-out;
+}
+.quote-box{
+  overflow:hidden;
+  position:absolute;
+  box-sizing:border-box;
+  background-repeat: no-repeat;
+  transition: transform 1s ease-in-out;
+}
+
+.quote-box{
+  min-width: 300px;
+  position: absolute;
+  z-index: 1;
+  color: black;
+  display: inline-block;
+  border: 5px solid blueviolet;
+  padding: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  border-radius:20px;
+  background: #7ac059;
+  margin: 20px;
+}
+.quote-box .quote{
+  font-size: 21px;
+  margin: 10px ;
+  font-weight: 500;
+}
+.quote-auther{
+  display: flex;
+}
+.quote-auther .name{
+  color: rgb(75, 30, 238);
+  margin-right: auto;
+  margin-left: auto;
+}
+.college{
+  color: red;
+  /* margin: 5px 5px 2px 5px; */
+  margin: auto;
+  /* visibility: hidden; */
+}
+.hover{
+  cursor: pointer;
+  transform: scale(1.3);
+  z-index: 3;
+}     
+.fade-out{
+  filter: blur(1px);
+  transform: scale(.8);
+  font-size: 18px;
+  
+}
