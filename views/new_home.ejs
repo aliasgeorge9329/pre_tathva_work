@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tathva</title>
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" 
+integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" 
+crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link
+href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap"
+rel="stylesheet"
+/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/joel.css" />
+    <link rel="stylesheet" href="/css/amal.css" />
+    <link rel="shortcut icon" href="/Images/logo.ico" />
+  </head>
+  <body id="home">
+  
+    <!-- <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <p class="navbar-brand">DAILY JOURNAL</p>
+        </div>
+          <ul class="nav navbar-nav navbar-right">
+            <li id="home"><a href="/">HOME</a></li>
+            <li id="about"><a href="/about">ABOUT US</a></li>
+            <li id="contact"><a href="/contact">CONTACT US</a></li>
+          </ul>
+      </div>
+    </nav> -->
+    
+    <nav class="navbar-complete fixednavbar">
+            <div class="brand-title">
+              <a href="/"><h1>Tathva</h1></a>
+            </div>
+            <div class="navbar-links">
+              <ul>
+                <li><button onclick="openAbout()">About</button></li> 
+                <li><a href="/auth/google">Login</a></li>
+              </ul>
+            </div>
+          </nav>
+
+          <div class="collage_container"></div>
+
+          <session id="about">
+         <div class="container form-popup" id="myAbout" style="margin-top: -450px;">
+    <div class="aboutclass-heading">
+      <h1>About US</h1>
+      <div class="aboutclass-content">
+        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+          Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-
+          Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum
+          passage, and going through the cites of the word in classical literature, discovered the undoubtable source.
+          Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good
+          and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during
+          the
+          Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in </p>
+      </div>
+      <button onclick="closeAbout()"><label for="show" class="close-btn fas fa-times" style="font-size: 30px;" title="close"></label></button>
+    </div>
+  </div>
+</session>
+
+        <footer>
+          <section class="footer-main" id="footer">
+            <div class="footer1 text-center">
+                <div class="container">
+                  
+                  <div class="social-footer">
+                              
+                    <a href="#facebook" class="facebook"><span class="fa fa-facebook"></span></a>
+                    <a href="#twitter" class="twitter"><span class="fa fa-twitter"></span></a>
+                    <a href="#instagram" class="instagram"><span class="fa fa-instagram"></span></a>
+                    <a href="#google-plus" class="google-plus"><span class="fa fa-google-plus"></span></a>
+                    <a href="#linkedin" class="linkedin"><span class="fa fa-linkedin"></span></a>
+                </div>
+                    <div class="bottom-copies text-center">
+                        <p class="copy-footer">© <a href="#">Thathva</a></p>
+                         
+                    </div>
+                </div>
+            </div>
+             <!-- move top -->
+            <button onclick="topFunction()" id="movetop" title="Go to top">
+                        <span class="fa fa-angle-up"></span>
+                           </button>
+                           
+        
+          </section>
+        </footer>
+        
+
+      </body>
+<script>
+
+
+  function closeAbout() {
+    document.getElementsByClassName("collage_container")[0].style.visibility = "visible"
+    document.getElementById("myAbout").style.display = "none";
+  }
+  function openAbout() {
+
+    document.getElementsByClassName("collage_container")[0].style.visibility = 'hidden';
+    document.getElementById("myAbout").style.display = "block";
+  }
+</script>
+  <script>
+    quotes_ = '<%-data%>';
+    quotes = JSON.parse(quotes_)
+
+    var options = {
+      container: document.querySelector(".collage_container"),
+      piecesNum: 15,
+    };
+    var count = 0,
+      maxCount = quotes.length+1;
+    function ImageCollage(defaults) {
+      var container = document.querySelector(".collage_container");
+      var containerWidth = container.offsetWidth;
+      var containerHeight = container.offsetHeight;
+      var containerStyle =
+        container.currentStyle || window.getComputedStyle(container);
+      var piecesNum = defaults.piecesNum;
+      var levelIndex = Math.floor(piecesNum * 0.75);
+      var maxsizeX = Math.round(container.offsetWidth / 2);
+      var maxsizeY = Math.round(container.offsetHeight / 2);
+      var offset = 15;
+      var strength = 3;
+      quote_boxes = [];
+      for (var i = 0; i < quotes.length; i++) {
+        var piece = document.createElement("div");
+        piece.className = "collage_piece";
+        if (i < levelIndex) {
+          piece.classList += " level_1";
+          piece.dataset.level = 1;
+          piece.style.width = getRandomInt(100, maxsizeX) + "px";
+          piece.style.height = getRandomInt(100, maxsizeY) + "px";
+        } else {
+          piece.classList += " level_2";
+          piece.dataset.level = 2;
+          piece.style.width = getRandomInt(100, maxsizeX) + "px";
+          piece.style.height = getRandomInt(100, maxsizeY) + "px";
+        }
+        container.appendChild(piece);
+        piece.dataset.offset = getRandomInt(
+          strength,
+          strength * 2 * piece.dataset.level
+        );
+        piece.style.backgroundSize =
+          "" + containerWidth + "px " + containerHeight + "px";
+        piece.style.left =
+          getRandomInt(0, containerWidth - piece.offsetWidth) + "px";
+        piece.style.top =
+          getRandomInt(0, containerHeight - piece.offsetHeight) + "px";
+        piece.style.backgroundPosition =
+          -piece.offsetLeft + "px " + -piece.offsetTop + "px";
+        var quotebox = document.createElement("div");
+        var quote = document.createElement("div");
+        var quoteAuther = document.createElement("div");
+        var quoteName = document.createElement("div");
+        var quoteCollege = document.createElement("div");
+        quotebox.className = "quote-box";
+        quote.className = "quote";
+        quoteAuther.className = "quote-auther";
+        quoteName.className = "name";
+        quoteCollege.className = "college";
+        if (i < levelIndex) {
+          quotebox.classList += " level_1";
+        } else {
+          quotebox.classList += " level_2";
+        }
+        quote.innerHTML = quotes[count % maxCount]["sentence"];
+        quoteName.innerHTML = quotes[count % maxCount]["name"];
+        quoteCollege.innerHTML = quotes[count % maxCount]["college"];
+        quoteAuther.appendChild(quoteName);
+        addEvent(quotebox, quoteAuther);
+        quotebox.appendChild(quote);
+        quotebox.appendChild(quoteAuther);
+        piece.appendChild(quotebox);
+        quote_boxes.push(quotebox);
+        count++;
+      }
+      function addEvent(quotebox, quoteAuther) {
+        quotebox.addEventListener("mouseover", () => {
+          for (var i = 0; i < quote_boxes.length; i++) {
+            if (quote_boxes[i] != quotebox)
+              quote_boxes[i].classList.add("fade-out");
+            else {
+              quotebox.classList.add("hover");
+              quoteAuther.appendChild(quoteCollege);
+            }
+          }
+        });
+        quotebox.addEventListener("mouseout", () => {
+          for (var i = 0; i < quote_boxes.length; i++) {
+            if (quote_boxes[i] != quotebox)
+              quote_boxes[i].classList.remove("fade-out");
+          }
+          quotebox.classList.remove("hover");
+          quoteAuther.removeChild(quoteCollege);
+        });
+      }
+      function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+    }
+    ImageCollage(options);
+  </script>
+</html>

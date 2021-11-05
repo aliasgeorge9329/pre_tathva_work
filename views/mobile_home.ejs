@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tathva</title>
-       <link rel="stylesheet" href="/css/m_styles.css" />
+    <link rel="stylesheet" href="/css/m_styles.css" />
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" 
 integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" 
 crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -26,24 +26,50 @@ rel="stylesheet"
     />
  
     <link rel="shortcut icon" href="/Images/logo.ico" />
+    
   </head>
+
+
   <body id="home">
   
-    <nav class="navbar-complete fixednavbar">
+  <!-- <nav class="navbar sticky-top navbar-expand-lg  navbar-dark bg-dark " >
+            <a class="navbar-brand" href="#"><h1>Thathva</h1></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Login</a>
+                </li>
+              </ul>
+            </div>
+          </nav> -->
+
+          <nav class="navbar-complete fixednavbar">
             <div class="brand-title">
-              <a href="/"><h1>Tathva</h1></a>
+              <a href="/" style="text-decoration:blink;"><h1>Tathva</h1></a>
             </div>
             <div class="navbar-links">
               <ul>
+                <li><button onclick="openAbout()">About</button></li> 
                 <li><a href="/auth/google">Login</a></li>
-                <li style="margin-left: -50px;"><button onclick="openAbout()">About</button></li>
               </ul>
             </div>
           </nav>
-          <div class="wrapper clearfix"></div>
+
+  
+          <session id="quote_container">
+            <div class="container clearfix"></div>
+          </session>
+   
+         
 
           
-        <session id="about">
+        <div id="about">
          <div class="container form-popup" id="myAbout" style="margin-top: 150px;">
     <div class="aboutclass-heading">
       <h1>About US</h1>
@@ -60,10 +86,10 @@ rel="stylesheet"
       <button onclick="closeAbout()"><label for="show" class="close-btn fas fa-times" style="font-size: 30px;" title="close"></label></button>
     </div>
   </div>
-</session>
+</div>
           
       
-        <footer style="margin-top: -280px;">
+        <!-- <footer style="margin-top: -280px;">
           <section class="footer-main" id="footer">
             <div class="footer1 text-center">
                 <div class="container">
@@ -81,38 +107,44 @@ rel="stylesheet"
                          
                     </div>
                 </div>
-            </div>
-             <!-- move top -->
+            </div> -->
+             <!-- move top
             <button onclick="topFunction()" id="movetop" title="Go to top">
                         <span class="fa fa-angle-up"></span>
                            </button>
                            
         
           </section>
-        </footer>
+        </footer> -->
 
       </body>
+
+
       <script>
 
   function closeAbout() {
-    document.getElementsByClassName("wrapper")[0].style.visibility = "visible"
-     document.getElementsByClassName("wrapper")[0].style.display = 'block';
+    document.getElementsByClassName("container")[0].style.visibility = "visible"
+     document.getElementsByClassName("container")[0].style.display = 'block';
     document.getElementById("myAbout").style.display = "none";
   }
   function openAbout() {
 
-    document.getElementsByClassName("wrapper")[0].style.visibility = 'hidden';
-     document.getElementsByClassName("wrapper")[0].style.display = 'none';
+    document.getElementsByClassName("container")[0].style.visibility = 'hidden';
+     document.getElementsByClassName("container")[0].style.display = 'none';
     document.getElementById("myAbout").style.display = "block";
   }
+
 </script>
+
+
       <script>
       quotes_ = '<%-data%>';
     quotes = JSON.parse(quotes_)
+    console.log(quotes.length)
 
 var options = {
-container:document.querySelector(".wrapper"),
-piecesNum:10,
+container:document.querySelector(".container"),
+piecesNum:quotes.length,
 }
 colors=["note-wrap note-yellow","note-wrap note-blue","note-wrap note-pink","note-wrap note-green"]
 maxCount=quotes.length
@@ -120,17 +152,21 @@ for(var count=0;  count<options.piecesNum;count++){
       var box=document.createElement('aside')
       box.className=colors[count%4]
       var quote=document.createElement('p')
-      quote.innerHTML=quotes[count%maxCount]["sentence"]
+      quote.innerHTML=quotes[count]["sentence"]
       var name2=document.createElement('a')
-     name2.innerHTML=quotes[count%maxCount]["name"]
+     name2.innerHTML=quotes[count]["name"]
      name2.style.color="#D83A25"
      var college=document.createElement('div')
      college.classList="college-mob"
-     college.innerHTML=quotes[count%maxCount]["college"]
+     college.innerHTML=quotes[count]["college"]
       box.appendChild(quote)
       box.appendChild(name2)
       box.append(college)
       options.container.appendChild(box)
 }
       </script>
+     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </html>

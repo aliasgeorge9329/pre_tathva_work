@@ -35,7 +35,9 @@ app.use(passport.session());
 app.use(useragent.express());
 
 users_printed_login_admin = [];
-admin_username = process.env.ADMIN_ID;
+admin_usernames = process.env.ADMIN_ID;
+// add admin as admin1|admin2| ..
+admin_username = admin_usernames.trim().split("|")
 mongoDB = process.env.MONGO;
 mailer_ID = process.env.EMAIL_ID
 
@@ -102,11 +104,11 @@ app.get("/auth/google",
 );
 
 app.get("/auth/google/compose",
-  passport.authenticate('google', { failureRedirect: "/login" }),
+  passport.authenticate('google', { failureRedirect: "/" }),
   function (req, res) {
     // Successful authentication, redirect to compose.
 
-    if (req["user"].username == admin_username) {
+    if (admin_username.indexOf(String(req["user"].username).trim()) != -1) {
       res.redirect("/admin");
     }
 
@@ -119,33 +121,36 @@ app.get("/auth/google/compose",
 
 // Home Route
 app.get("/", function (req, res) {
+
   User.find({ status: "accepted" }, { googleId: 0, username: 0, __v: 0, status: 0, _id: 0 }, function (err, all_user) {
     if (err) {
       console.log(err);
     }
-    else if (req.useragent["isDesktop"] == true) {
-      // console.log(JSON.stringify(all_user));
-      res.render("home", { data: JSON.stringify(all_user) });
-    }
     else {
-      if (all_user.length > 10) {
-        const res = [];
-        for (let i = 0; i < 10;) {
-          const random = Math.floor(Math.random() * arr.length);
-          if (res.indexOf(arr[random]) !== -1) {
-            continue;
-          };
-          res.push(arr[random]);
-          i++;
-        };
-        res.render("mobile_home", { data: JSON.stringify(res) });
+      //For getting last appended 12 data's
+      if (all_user.length > 12) {
+        new_user_array = all_user.slice(all_user.length - 12, all_user.length)
       }
       else {
-        res.render("mobile_home", { data: JSON.stringify(all_user) });
+        new_user_array = all_user;
+      };
+
+      if (req.useragent["isDesktop"] == true) {
+        // console.log(JSON.stringify(all_user));
+        // res.render("new_home", { data: JSON.stringify(new_user_array) });
+        res.render("home", { data: JSON.stringify(new_user_array) });
       }
+      else {
+        res.render("mobile_home", { data: JSON.stringify(new_user_array) });
+      }
+
     }
+
   });
+
+
 });
+
 
 
 app.get("/compose", function (req, res) {
@@ -203,7 +208,7 @@ app.post("/compose", function (req, res) {
 
 
 app.get("/admin", function (req, res) {
-  if (req.isAuthenticated() && req["user"].username == admin_username) {
+  if (req.isAuthenticated() && (admin_username.indexOf(String(req["user"].username).trim()) != -1)) {
     message_ = req.flash('message')[0];
     User.find({}, { googleId: 0, username: 0, __v: 0, college: 0 }, function (err, all_user) {
       if (err) {
@@ -211,7 +216,7 @@ app.get("/admin", function (req, res) {
       }
       else {
         all_user.forEach(function (each) {
-          if (each.status == null && each.username != admin_username && each.sentence != null) {
+          if (each.status == null && (admin_username.indexOf(String(each.username).trim()) != -1) && each.sentence != null) {
             globalThis.users_printed_login_admin.push(String(each._id));
           }
         })
@@ -226,7 +231,7 @@ app.get("/admin", function (req, res) {
 
 app.post("/admin", function (req, res) {
 
-  if (req.isAuthenticated() && req["user"].username == admin_username) {
+  if (req.isAuthenticated() && (admin_username.indexOf(String(req["user"].username).trim()) != -1)) {
     accepted_ = Object.keys(req.body);
     accepted_.pop();
     rejected = globalThis.users_printed_login_admin.filter((el) => !accepted_.includes(el));
@@ -289,7 +294,7 @@ app.post("/admin", function (req, res) {
 });
 
 app.post("/modify_accepted", function (req, res) {
-  if (req.isAuthenticated() && req["user"].username == admin_username) {
+  if (req.isAuthenticated() && (admin_username.indexOf(String(req["user"].username).trim()) != -1)) {
     to_reject_ = Object.keys(req.body);
     to_reject_.pop();
     to_reject = to_reject_;
@@ -317,14 +322,16 @@ app.post("/modify_accepted", function (req, res) {
 
 
 app.get("/print", function (req, res) {
-  if (req.isAuthenticated() && req["user"].username == admin_username) {
+  if (req.isAuthenticated() && (admin_username.indexOf(String(req["user"].username).trim()) != -1)) {
     User.find({ username: { $ne: admin_username } }, { googleId: 0, __v: 0, _id: 0 }, function (err, all_user) {
 
       res.render("print", { data: JSON.stringify(all_user) });
 
     });
-
-  };
+  }
+  else {
+    redirect("/")
+  }
 });
 
 

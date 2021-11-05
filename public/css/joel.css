@@ -89,10 +89,11 @@ button {
   
   #about .container{
     width:55%;
-    height:70%;
-  margin-top: 60px;
+    /* height:70%; */
+  /* margin-top: 60px; */
   /* margin-left: 28%; */
-  padding-top:32px;
+  padding-top:20px;
+  margin-bottom: 10px;
   background-color: #56d8e4;
   justify-self: center;
   border: 2px solid black;
@@ -105,9 +106,12 @@ button {
   .aboutclass-heading{
   justify-content: center;
   text-align: center;
+  margin-top: 40px;
   }
   .aboutclass-heading button{
-    padding: 100px;
+    /* padding: 100px; */
+    margin-top: 50px;
+    margin-bottom: 100px;
   }
 
   /*Footer CSS*/
