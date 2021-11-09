@@ -10,10 +10,11 @@
 <body>
 
     <br><br>
+    <% data=JSON.parse(data) %>
 
-    <%  JSON.parse(data).forEach(function(user_data){%>
+    <% data.forEach(function(user_data){ i= data.indexOf(user_data)+1%>
              
-  <div>Name: <%=user_data.name %> <br>Email id: <%=user_data.username %> <br>College: <%=user_data.college %> <br>Sentence Filled: <%=user_data.sentence %> <br>Status: <%=user_data.status %> <br></div><br><hr><br>
+  <div>No:<%=i%> <br> Name: <%=user_data.name %> <br>Email id: <%=user_data.username %> <br>College: <%=user_data.college %> <br>Sentence Filled: <%=user_data.sentence %> <br>Status: <%=user_data.status%> <br></div><br><hr><br>
 
 
     <% }) %>

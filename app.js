@@ -29,6 +29,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -192,7 +193,7 @@ app.post("/compose", function (req, res) {
 
     else {
       if (foundUser) {
-        foundUser.sentence = user_sentence;
+        foundUser.sentence = String(user_sentence).split(' ').filter(word => word).join(' ');
         foundUser.name = name_;
         foundUser.college = college_;
         foundUser.save(function () {
@@ -323,14 +324,18 @@ app.post("/modify_accepted", function (req, res) {
 
 app.get("/print", function (req, res) {
   if (req.isAuthenticated() && (admin_username.indexOf(String(req["user"].username).trim()) != -1)) {
-    User.find({ username: { $ne: admin_username } }, { googleId: 0, __v: 0, _id: 0 }, function (err, all_user) {
-
-      res.render("print", { data: JSON.stringify(all_user) });
-
+    User.find({}, { googleId: 0, __v: 0, _id: 0 }, function (err, all_user) {
+      print_user = []
+      all_user.forEach(function (each) {
+        if (admin_username.indexOf(String(each.username).trim()) == -1 && each.sentence != null) {
+          print_user.push(each);
+        }
+      })
+      res.render("print", { data: JSON.stringify(print_user) });
     });
   }
   else {
-    redirect("/")
+    res.redirect("/")
   }
 });
 

@@ -40,7 +40,7 @@ body {
 
 #quote_container .container {
 	
-	margin: 250px auto 150px auto;
+	margin: 140px auto 10px auto;
 
 }
 
@@ -161,7 +161,7 @@ a{
 	text-decoration:blink;
 }
     .brand-title {
-      font-size: 3.5rem;
+      font-size: 2rem;
       margin: 2rem;
       display: flex;
     }
@@ -175,7 +175,7 @@ a{
     .navbar-links ul {
       margin: 0;
       padding: 0;
-      display: flex;
+/*       display: flex; */
     }
     .navbar-links li {
       list-style: none;
@@ -184,7 +184,7 @@ a{
       text-decoration: none;
       color: white;
       padding-right: 100px;
-      display: block;
+      display: flex;
     }
     .navbar-links li a:hover {
       color: rgb(238, 207, 108);
@@ -220,7 +220,8 @@ a{
 
     body {
       /* height: 120vh; */
-      background: linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%);
+      /* background: linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%); */
+      background-image: url('/Images/bg.jpeg');
     }
   
     #about {
@@ -228,30 +229,8 @@ a{
       margin-bottom: 100px;
     }
 
-#about .container{
-    width:55%;
-    height:70%;
-  margin-top: 100px;
-  margin-bottom: 20px;
-  /* margin-left: 28%; */
-  position: relative;
-  padding-top:32px;
-  background-color: #56d8e4;
-  justify-self: center;
-  border: 2px solid black;
-  }
-
-  #about .aboutclass-content{
-    padding: 20px;
-    margin:20px;
-  
-  }
-
-
-  #about .aboutclass-heading{
-    justify-content: center;
-    text-align: center;
-    }
-    #about .aboutclass-heading button{
-      padding: 100px;
-    }
+.loadmore-btn{
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
